@@ -54,7 +54,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        FOR SWAGGER DOC-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-core</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <!--        FOR SWAGGER DOC-->
 <!--        <dependency>-->
 <!--            <groupId>io.springfox</groupId>-->
 <!--            <artifactId>springfox-swagger2</artifactId>-->
