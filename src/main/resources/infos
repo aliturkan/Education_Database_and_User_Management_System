@@ -1,0 +1,51 @@
+@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
+    contains at least one lowercase letter, one uppercase letter, and one digit, with no restrictions on the order or placement of these characters.
+    It doesn't specify a minimum length or any special characters that might be required.
+    This type of regular expression is commonly used to enforce strong password policies that require a combination of different character types to enhance security.
+
+@CrossOrigin
+    This allows the method to respond to cross-origin requests from any domain.
+    You can also customize the behavior of @CrossOrigin by providing specific attributes:
+    @CrossOrigin(origins = "http://example.com", maxAge = 3600)
+
+@JsonIgnore
+    which is commonly used for JSON serialization and deserialization in web applications.
+    The annotation is used to indicate that a specific property of a class should be ignored during the serialization process.
+    This is particularly useful when you want to exclude certain fields from being included in the JSON representation of an object.
+
+orphanRemoval = true
+    orphanRemoval attribute is used to manage the removal of child entities when they are no longer associated with a parent entity.
+    This attribute is typically applied to one-to-many or one-to-one relationships in entity classes.
+
+@PreAuthorize
+    This annotation is used to specify method-level security expressions that control access to methods in your application.
+    This annotation is commonly used in combination with Spring's method-level security features to restrict access to certain methods based on user roles, permissions, or other conditions.
+
+@Pattern(regexp = "\\A(?!\\s*\\Z).+"
+    The regular expression \\A(?!\\s*\\Z).+ is used to check if a string is not empty or not composed solely of whitespace characters.
+    Let's break down the regular expression:
+    --- \\A: Asserts the beginning of the string.
+    --- (?!\\s*\\Z): This is a negative lookahead assertion that checks that the string is not followed by optional whitespace characters (\\s*) and then the end of the string (\\Z).
+    In other words, it ensures that the string is not empty or composed solely of whitespace.
+    --- .+: Matches one or more characters.
+
+Serialization:
+    is the process of converting an object's state into a format that can be stored or transmitted.
+    This format is often a sequence of bytes that can be written to a file, sent over a network, or stored in a database.
+    The serialized data typically includes the object's data fields and, optionally, some metadata about the object's class.
+    The goal is to create a compact representation that can be easily reconstructed into the original object when needed.
+    Use Cases:Data Storage,Caching,Network Communication etc
+
+Deserialization:
+    is the process of reconstructing an object from its serialized form.
+    This involves taking the serialized data and using it to create an instance of the original object, complete with its data fields and state.
+
+Builder Design Pattern (in CreationalDP)
+    Using the Builder pattern in this way makes it clear which attributes are required and which are optional,
+    and it provides a structured way to create objects with varying configurations.
+
+CascadeType (ALL, PERSIST, MERGE, REMOVE, REFRESH, DETACH)
+    JPA defines a set of cascade types that you can use to specify the desired behavior.
+    These cascade types are used in one-to-many and many-to-one relationships, where entities are linked together.
+    Using cascade types can simplify your code and ensure that the changes to related entities are synchronized properly when working with complex object graphs.
+

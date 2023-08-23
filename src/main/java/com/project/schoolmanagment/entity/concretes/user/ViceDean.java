@@ -1,7 +1,6 @@
 package com.project.schoolmanagment.entity.concretes.user;
 
 import com.project.schoolmanagment.entity.abstracts.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,8 +12,6 @@ import javax.persistence.Entity;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
 public class ViceDean extends User {
-
 }
