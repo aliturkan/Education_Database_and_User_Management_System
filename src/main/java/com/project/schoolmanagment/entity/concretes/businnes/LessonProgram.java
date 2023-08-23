@@ -2,6 +2,9 @@ package com.project.schoolmanagment.entity.concretes.businnes;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.schoolmanagment.entity.concretes.user.Student;
+import com.project.schoolmanagment.entity.concretes.user.Teacher;
 import com.project.schoolmanagment.entity.enums.Day;
 import lombok.*;
 
@@ -39,6 +42,22 @@ public class LessonProgram {
 	)
 	private Set<Lesson>lessons;
 
-	//educationTerm -> LessonProgram -> Lesson
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private EducationTerm educationTerm;
+
+	//TODO learn about FetchTypes
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@ManyToMany(mappedBy = "lessonsProgramList",fetch = FetchType.EAGER)
+	private Set<Teacher>teachers;
+
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@ManyToMany(mappedBy = "lessonsProgramList",fetch = FetchType.EAGER)
+	private Set<Student>students;
+
+	@PreRemove
+	private void removeLessonProgramFromStudentAndTeacher(){
+		teachers.forEach(teacher -> teacher.getLessonsProgramList().remove(this));
+		students.forEach(student ->student.getLessonsProgramList().remove(this));
+	}
 
 }
