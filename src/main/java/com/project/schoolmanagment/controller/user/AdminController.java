@@ -42,7 +42,6 @@ public class AdminController {
 		return ResponseEntity.ok(adminService.deleteById(id));
 	}
 
-	//TODO
 	//ALI
 	@GetMapping("/getAllAdmins")
 	public ResponseEntity<List<AdminResponse>>getAllAdmins(){
