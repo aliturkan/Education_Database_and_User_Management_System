@@ -10,6 +10,7 @@ import com.project.schoolmanagment.payload.messages.SuccessMessages;
 import com.project.schoolmanagment.payload.request.user.AdminRequest;
 import com.project.schoolmanagment.payload.response.message.ResponseMessage;
 import com.project.schoolmanagment.payload.response.user.AdminResponse;
+import com.project.schoolmanagment.payload.response.user.DeanResponse;
 import com.project.schoolmanagment.repository.user.AdminRepository;
 import com.project.schoolmanagment.service.helper.PageableHelper;
 import com.project.schoolmanagment.service.validator.UniquePropertyValidator;
@@ -18,8 +19,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -76,7 +80,24 @@ public class AdminService {
 		return adminRepository.findAll(pageable);
 	}
 
-
+// 1.way
+//	public List<AdminResponse> getAllAdmins() {
+//		List<Admin> adminList = adminRepository.findAll();
+//		List<AdminResponse> adminResponses = new ArrayList<>();
+//
+//		for (Admin admin : adminList) {
+//			AdminResponse adminResponse = adminMapper.mapAdminToAdminResponse(admin);
+//			adminResponses.add(adminResponse);
+//		}
+//		return adminResponses;
+//	}
+// 2.way with Lambda
+	public List<AdminResponse> getAllAdmins(){
+		return adminRepository.findAll()
+				.stream()
+				.map(adminMapper::mapAdminToAdminResponse)
+				.collect(Collectors.toList());
+	}
 
 	public long countAllAdmins(){
 		return adminRepository.count();
