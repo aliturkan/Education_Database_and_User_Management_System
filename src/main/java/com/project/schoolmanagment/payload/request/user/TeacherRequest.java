@@ -17,17 +17,14 @@ import java.util.Set;
 @SuperBuilder
 public class TeacherRequest extends BaseUserRequest {
 
-    @NotNull(message = "Please select Lesson")
-    private Set<Long> lessonsIdList;
+	@NotNull(message = "Please select Lesson")
+	private Set<Long> lessonsIdList;
 
-    @NotNull(message = "Please select isAdvisor Teacher")
-    private Boolean isAdvisorTeacher;
+	@NotNull(message = "Please select isAdvisor Teacher")
+	private Boolean isAdvisorTeacher;
 
-
-    @NotNull(message = "Please enter your email")
-    @Email(message = "Please enter valid email")
-    @Size(min=5, max=50 , message = "Your email should be between 5 and 50 chars")
-    private String email;
-
-
+	@NotNull(message = "Please enter your email")
+	@Email(message = "Please enter valid email")
+	@Size(min=5, max=50 , message = "Your email should be between 5 and 50 chars")
+	private String email;
 }

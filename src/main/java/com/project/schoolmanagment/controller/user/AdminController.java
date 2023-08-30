@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyAuthority('ADMIN')")
 public class AdminController {
 
 	private final AdminService adminService;
@@ -42,32 +44,25 @@ public class AdminController {
 		return ResponseEntity.ok(adminService.deleteById(id));
 	}
 
-	//TODO
-	//ALI i
 	@GetMapping("/getAllAdmins")
 	public ResponseEntity<List<AdminResponse>>getAllAdmins(){
 		return ResponseEntity.ok(adminService.getAllAdmins());
 	}
 
-	//TODO
-	//ENES
-	@GetMapping("/getAdminById")
-	public ResponseEntity<AdminResponse>getAdminById(Long id){
-		return null;
+	@GetMapping("/getAdminById/{id}")
+	public ResponseEntity<AdminResponse>getAdminById(@PathVariable Long id){
+		return ResponseEntity.ok(adminService.findById(id));
 	}
 
-	//TODO
-	//ZIYA
 	@GetMapping("/getAdminByUserName/{username}")
 	public ResponseEntity<List<AdminResponse>>findAdminsByUsername(@PathVariable String username){
-		return null;
+		return ResponseEntity.ok(adminService.findAdminsByUsername(username));
 	}
 
-	//TODO
-	//NACI
+
 	@GetMapping("/getAdminByNameOrLastname")
-	public ResponseEntity<List<AdminResponse>>getAdminByNameOrLastname(@RequestParam String query){
-		return null;
+	public ResponseEntity<List<AdminResponse>>getAdminByNameOrLastname(@RequestParam String nameOrSurname){
+		return ResponseEntity.ok(adminService.getAdminByNameOrLastname(nameOrSurname));
 	}
 
 

@@ -4,25 +4,23 @@ import com.project.schoolmanagment.entity.concretes.user.Admin;
 import com.project.schoolmanagment.entity.enums.RoleType;
 import com.project.schoolmanagment.exception.ConflictException;
 import com.project.schoolmanagment.exception.ResourceNotFoundException;
-import com.project.schoolmanagment.payload.mappers.AdminMapper;
+import com.project.schoolmanagment.payload.mappers.user.AdminMapper;
 import com.project.schoolmanagment.payload.messages.ErrorMessages;
 import com.project.schoolmanagment.payload.messages.SuccessMessages;
 import com.project.schoolmanagment.payload.request.user.AdminRequest;
 import com.project.schoolmanagment.payload.response.message.ResponseMessage;
 import com.project.schoolmanagment.payload.response.user.AdminResponse;
-import com.project.schoolmanagment.payload.response.user.DeanResponse;
 import com.project.schoolmanagment.repository.user.AdminRepository;
 import com.project.schoolmanagment.service.helper.PageableHelper;
 import com.project.schoolmanagment.service.validator.UniquePropertyValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +32,7 @@ public class AdminService {
 	private final UserRoleService userRoleService;
 	private final UniquePropertyValidator uniquePropertyValidator;
 	private final PageableHelper pageableHelper;
+	private final PasswordEncoder passwordEncoder;
 
 	public ResponseMessage<AdminResponse>saveAdmin(AdminRequest adminRequest){
 
@@ -52,7 +51,8 @@ public class AdminService {
 		if(Objects.equals(adminRequest.getUsername(),"superAdmin")){
 			admin.setBuiltIn(true);
 		}
-
+		//we are encoding the password
+		admin.setPassword(passwordEncoder.encode(adminRequest.getPassword()));
 		Admin savedAdmin= adminRepository.save(admin);
 
 		// we are returning response DTO by mapping the saved version of admin.
@@ -65,10 +65,7 @@ public class AdminService {
 
 	public String deleteById(Long id){
 		//we should check the database if this id really exist
-		Optional<Admin>admin =adminRepository.findById(id);
-		if(admin.isEmpty()){
-			throw new ResourceNotFoundException(String.format(ErrorMessages.NOT_FOUND_USER_MESSAGE,id));
-		} else if (admin.get().isBuiltIn()) {
+		if (findAdminById(id).isBuiltIn()) {
 			throw new ConflictException(ErrorMessages.NOT_PERMITTED_METHOD_MESSAGE);
 		}
 		adminRepository.deleteById(id);
@@ -80,18 +77,15 @@ public class AdminService {
 		return adminRepository.findAll(pageable);
 	}
 
-// 1.way
-//	public List<AdminResponse> getAllAdmins() {
-//		List<Admin> adminList = adminRepository.findAll();
-//		List<AdminResponse> adminResponses = new ArrayList<>();
-//
-//		for (Admin admin : adminList) {
-//			AdminResponse adminResponse = adminMapper.mapAdminToAdminResponse(admin);
-//			adminResponses.add(adminResponse);
-//		}
-//		return adminResponses;
-//	}
-// 2.way with Lambda
+	public long countAllAdmins(){
+		return adminRepository.count();
+	}
+
+	//private reusable method for checking the database, if exist it returns value otherwise throws exception
+	private Admin findAdminById(Long id){
+		return adminRepository.findById(id)
+				.orElseThrow( ()-> new ResourceNotFoundException(String.format(ErrorMessages.NOT_FOUND_USER_MESSAGE, id)));
+	}
 	public List<AdminResponse> getAllAdmins(){
 		return adminRepository.findAll()
 				.stream()
@@ -99,7 +93,24 @@ public class AdminService {
 				.collect(Collectors.toList());
 	}
 
-	public long countAllAdmins(){
-		return adminRepository.count();
+	public AdminResponse findById(Long id){
+		return adminMapper.mapAdminToAdminResponse(findAdminById(id));
+	}
+
+
+	public List<AdminResponse> findAdminsByUsername(String username) {
+		List<Admin> admins = adminRepository.findByUsername(username);
+		if(admins.isEmpty()){
+			throw new ResourceNotFoundException(String.format(ErrorMessages.NOT_FOUND_USER_MESSAGE_USERNAME,username));
+		}
+		return adminRepository.findByUsername(username).stream().map(adminMapper::mapAdminToAdminResponse).collect(Collectors.toList());
+	}
+
+	public List<AdminResponse> getAdminByNameOrLastname(String nameOrSurname) {
+		List<Admin> admins = adminRepository.findByNameOrSurname(nameOrSurname,nameOrSurname);
+		if (admins.isEmpty()) {
+			throw new ResourceNotFoundException(String.format(ErrorMessages.NOT_FOUND_USER_MESSAGE_NAME_OR_LASTNAME, nameOrSurname));
+		}
+		return admins.stream().map(adminMapper::mapAdminToAdminResponse).collect(Collectors.toList());
 	}
 }

@@ -25,8 +25,6 @@ public class SchoolManagementApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(SchoolManagementApplication.class, args);
-        //commit test
-
     }
 
     @Override
@@ -56,12 +54,4 @@ public class SchoolManagementApplication implements CommandLineRunner {
 
     }
 }
-
-
-
-
-
-
-
-
-
+//ali 1
