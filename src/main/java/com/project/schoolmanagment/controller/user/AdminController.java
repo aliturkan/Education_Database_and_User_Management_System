@@ -59,7 +59,6 @@ public class AdminController {
 		return ResponseEntity.ok(adminService.findAdminsByUsername(username));
 	}
 
-
 	@GetMapping("/getAdminByNameOrLastname")
 	public ResponseEntity<List<AdminResponse>>getAdminByNameOrLastname(@RequestParam String nameOrSurname){
 		return ResponseEntity.ok(adminService.getAdminByNameOrLastname(nameOrSurname));
