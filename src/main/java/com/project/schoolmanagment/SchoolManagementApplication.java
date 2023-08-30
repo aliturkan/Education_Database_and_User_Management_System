@@ -54,4 +54,4 @@ public class SchoolManagementApplication implements CommandLineRunner {
 
     }
 }
-//ali 1
+//ali 1 send from desktop
