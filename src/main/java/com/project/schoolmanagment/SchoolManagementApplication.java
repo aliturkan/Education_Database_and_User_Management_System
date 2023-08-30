@@ -54,5 +54,3 @@ public class SchoolManagementApplication implements CommandLineRunner {
 
     }
 }
-//aliye gonder
-//gonderiyorum
