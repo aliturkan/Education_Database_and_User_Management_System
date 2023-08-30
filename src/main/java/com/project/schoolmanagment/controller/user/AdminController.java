@@ -62,11 +62,4 @@ public class AdminController {
 	public ResponseEntity<List<AdminResponse>>getAdminByNameOrLastname(@RequestParam String nameOrSurname){
 		return ResponseEntity.ok(adminService.getAdminByNameOrLastname(nameOrSurname));
 	}
-
-
-
-
-
-
-
 }
