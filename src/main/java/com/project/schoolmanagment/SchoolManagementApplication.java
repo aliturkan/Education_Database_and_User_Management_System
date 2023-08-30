@@ -54,4 +54,4 @@ public class SchoolManagementApplication implements CommandLineRunner {
 
     }
 }
-//main 1.
+//ali 1.
