@@ -11,5 +11,5 @@ COPY target/school-management-batch-161-0.0.1-SNAPSHOT.jar /app.jar
 CMD ["java", "-jar", "/app.jar"]
 
 
-#docker build -t sametyaprak/school-management-batch-161-0.0.1-SNAPSHOT .
-#docker run sametyaprak/school-management-batch-161-0.0.1-SNAPSHOT
+#docker build -t aliturkan/school-management-batch-161-0.0.1-SNAPSHOT .
+#docker run aliturkan/school-management-batch-161-0.0.1-SNAPSHOT
