@@ -25,7 +25,7 @@ public class ContactMessageController {
 	/**
 	 * {
 	 *     "name": "this is my name",
-	 *     "email": "techpro@gmail.com",
+	 *     "email": "education@gmail.com",
 	 *     "subject": "starting the project",
 	 *     "message": "this is my message"
 	 * }
