@@ -1,4 +1,4 @@
-# backend-project
+# Education Database and User Management System
 
 **Author:**  
 _Ali Turkan_
